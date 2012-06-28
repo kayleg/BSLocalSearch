@@ -1,0 +1,407 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AFEC4B15159CBEA400B3D27E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFEC4B14159CBEA400B3D27E /* Foundation.framework */; };
+		AFEC4B1A159CBEA400B3D27E /* LocalSearch.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = AFEC4B19159CBEA400B3D27E /* LocalSearch.h */; };
+		AFEC4B1C159CBEA400B3D27E /* LocalSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = AFEC4B1B159CBEA400B3D27E /* LocalSearch.m */; };
+		AFEC4B24159CBEA500B3D27E /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFEC4B23159CBEA500B3D27E /* SenTestingKit.framework */; };
+		AFEC4B26159CBEA500B3D27E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFEC4B25159CBEA500B3D27E /* UIKit.framework */; };
+		AFEC4B27159CBEA500B3D27E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFEC4B14159CBEA400B3D27E /* Foundation.framework */; };
+		AFEC4B2A159CBEA500B3D27E /* libLocalSearch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AFEC4B11159CBEA400B3D27E /* libLocalSearch.a */; };
+		AFEC4B30159CBEA500B3D27E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AFEC4B2E159CBEA500B3D27E /* InfoPlist.strings */; };
+		AFEC4B33159CBEA500B3D27E /* LocalSearchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AFEC4B32159CBEA500B3D27E /* LocalSearchTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AFEC4B28159CBEA500B3D27E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AFEC4B08159CBEA400B3D27E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AFEC4B10159CBEA400B3D27E;
+			remoteInfo = LocalSearch;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AFEC4B0F159CBEA400B3D27E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+				AFEC4B1A159CBEA400B3D27E /* LocalSearch.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		AFEC4B11159CBEA400B3D27E /* libLocalSearch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLocalSearch.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFEC4B14159CBEA400B3D27E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		AFEC4B18159CBEA400B3D27E /* LocalSearch-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LocalSearch-Prefix.pch"; sourceTree = "<group>"; };
+		AFEC4B19159CBEA400B3D27E /* LocalSearch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalSearch.h; sourceTree = "<group>"; };
+		AFEC4B1B159CBEA400B3D27E /* LocalSearch.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalSearch.m; sourceTree = "<group>"; };
+		AFEC4B22159CBEA500B3D27E /* LocalSearchTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocalSearchTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFEC4B23159CBEA500B3D27E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		AFEC4B25159CBEA500B3D27E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		AFEC4B2D159CBEA500B3D27E /* LocalSearchTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LocalSearchTests-Info.plist"; sourceTree = "<group>"; };
+		AFEC4B2F159CBEA500B3D27E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		AFEC4B31159CBEA500B3D27E /* LocalSearchTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalSearchTests.h; sourceTree = "<group>"; };
+		AFEC4B32159CBEA500B3D27E /* LocalSearchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalSearchTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AFEC4B0E159CBEA400B3D27E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AFEC4B15159CBEA400B3D27E /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFEC4B1E159CBEA500B3D27E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AFEC4B24159CBEA500B3D27E /* SenTestingKit.framework in Frameworks */,
+				AFEC4B26159CBEA500B3D27E /* UIKit.framework in Frameworks */,
+				AFEC4B27159CBEA500B3D27E /* Foundation.framework in Frameworks */,
+				AFEC4B2A159CBEA500B3D27E /* libLocalSearch.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AFEC4B06159CBEA400B3D27E = {
+			isa = PBXGroup;
+			children = (
+				AFEC4B16159CBEA400B3D27E /* LocalSearch */,
+				AFEC4B2B159CBEA500B3D27E /* LocalSearchTests */,
+				AFEC4B13159CBEA400B3D27E /* Frameworks */,
+				AFEC4B12159CBEA400B3D27E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AFEC4B12159CBEA400B3D27E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AFEC4B11159CBEA400B3D27E /* libLocalSearch.a */,
+				AFEC4B22159CBEA500B3D27E /* LocalSearchTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AFEC4B13159CBEA400B3D27E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AFEC4B14159CBEA400B3D27E /* Foundation.framework */,
+				AFEC4B23159CBEA500B3D27E /* SenTestingKit.framework */,
+				AFEC4B25159CBEA500B3D27E /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AFEC4B16159CBEA400B3D27E /* LocalSearch */ = {
+			isa = PBXGroup;
+			children = (
+				AFEC4B19159CBEA400B3D27E /* LocalSearch.h */,
+				AFEC4B1B159CBEA400B3D27E /* LocalSearch.m */,
+				AFEC4B17159CBEA400B3D27E /* Supporting Files */,
+			);
+			path = LocalSearch;
+			sourceTree = "<group>";
+		};
+		AFEC4B17159CBEA400B3D27E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AFEC4B18159CBEA400B3D27E /* LocalSearch-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AFEC4B2B159CBEA500B3D27E /* LocalSearchTests */ = {
+			isa = PBXGroup;
+			children = (
+				AFEC4B31159CBEA500B3D27E /* LocalSearchTests.h */,
+				AFEC4B32159CBEA500B3D27E /* LocalSearchTests.m */,
+				AFEC4B2C159CBEA500B3D27E /* Supporting Files */,
+			);
+			path = LocalSearchTests;
+			sourceTree = "<group>";
+		};
+		AFEC4B2C159CBEA500B3D27E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AFEC4B2D159CBEA500B3D27E /* LocalSearchTests-Info.plist */,
+				AFEC4B2E159CBEA500B3D27E /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AFEC4B10159CBEA400B3D27E /* LocalSearch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AFEC4B36159CBEA500B3D27E /* Build configuration list for PBXNativeTarget "LocalSearch" */;
+			buildPhases = (
+				AFEC4B0D159CBEA400B3D27E /* Sources */,
+				AFEC4B0E159CBEA400B3D27E /* Frameworks */,
+				AFEC4B0F159CBEA400B3D27E /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LocalSearch;
+			productName = LocalSearch;
+			productReference = AFEC4B11159CBEA400B3D27E /* libLocalSearch.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		AFEC4B21159CBEA500B3D27E /* LocalSearchTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AFEC4B39159CBEA500B3D27E /* Build configuration list for PBXNativeTarget "LocalSearchTests" */;
+			buildPhases = (
+				AFEC4B1D159CBEA500B3D27E /* Sources */,
+				AFEC4B1E159CBEA500B3D27E /* Frameworks */,
+				AFEC4B1F159CBEA500B3D27E /* Resources */,
+				AFEC4B20159CBEA500B3D27E /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AFEC4B29159CBEA500B3D27E /* PBXTargetDependency */,
+			);
+			name = LocalSearchTests;
+			productName = LocalSearchTests;
+			productReference = AFEC4B22159CBEA500B3D27E /* LocalSearchTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AFEC4B08159CBEA400B3D27E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Kayle Gishen";
+			};
+			buildConfigurationList = AFEC4B0B159CBEA400B3D27E /* Build configuration list for PBXProject "LocalSearch" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = AFEC4B06159CBEA400B3D27E;
+			productRefGroup = AFEC4B12159CBEA400B3D27E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AFEC4B10159CBEA400B3D27E /* LocalSearch */,
+				AFEC4B21159CBEA500B3D27E /* LocalSearchTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AFEC4B1F159CBEA500B3D27E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AFEC4B30159CBEA500B3D27E /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		AFEC4B20159CBEA500B3D27E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AFEC4B0D159CBEA400B3D27E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AFEC4B1C159CBEA400B3D27E /* LocalSearch.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFEC4B1D159CBEA500B3D27E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AFEC4B33159CBEA500B3D27E /* LocalSearchTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AFEC4B29159CBEA500B3D27E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AFEC4B10159CBEA400B3D27E /* LocalSearch */;
+			targetProxy = AFEC4B28159CBEA500B3D27E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		AFEC4B2E159CBEA500B3D27E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AFEC4B2F159CBEA500B3D27E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AFEC4B34159CBEA500B3D27E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		AFEC4B35159CBEA500B3D27E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AFEC4B37159CBEA500B3D27E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/LocalSearch.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LocalSearch/LocalSearch-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		AFEC4B38159CBEA500B3D27E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/LocalSearch.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LocalSearch/LocalSearch-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		AFEC4B3A159CBEA500B3D27E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LocalSearch/LocalSearch-Prefix.pch";
+				INFOPLIST_FILE = "LocalSearchTests/LocalSearchTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		AFEC4B3B159CBEA500B3D27E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LocalSearch/LocalSearch-Prefix.pch";
+				INFOPLIST_FILE = "LocalSearchTests/LocalSearchTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AFEC4B0B159CBEA400B3D27E /* Build configuration list for PBXProject "LocalSearch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFEC4B34159CBEA500B3D27E /* Debug */,
+				AFEC4B35159CBEA500B3D27E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AFEC4B36159CBEA500B3D27E /* Build configuration list for PBXNativeTarget "LocalSearch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFEC4B37159CBEA500B3D27E /* Debug */,
+				AFEC4B38159CBEA500B3D27E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		AFEC4B39159CBEA500B3D27E /* Build configuration list for PBXNativeTarget "LocalSearchTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFEC4B3A159CBEA500B3D27E /* Debug */,
+				AFEC4B3B159CBEA500B3D27E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AFEC4B08159CBEA400B3D27E /* Project object */;
+}
