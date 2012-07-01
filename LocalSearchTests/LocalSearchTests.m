@@ -7,26 +7,66 @@
 //
 
 #import "LocalSearchTests.h"
+#import "BSLocalSearch.h"
+#import "Exceptions.h"
+
+static NSString* google_api_key = @"AIzaSyBvXdcfOZg_J3BGJLhH1vs-5UZ2_R0S-e8";
+
+@interface BSLocalSearch ()
+
+- (id)objectWithJSONString:(NSString*)string;
+- (id)executeTextSearch:(NSString*)string;
+
+@end
+
 
 @implementation LocalSearchTests
 
 - (void)setUp
 {
     [super setUp];
-    
-    // Set-up code here.
 }
 
 - (void)tearDown
 {
-    // Tear-down code here.
     
     [super tearDown];
 }
 
-- (void)testExample
+- (void)testDecodingString
 {
-    STFail(@"Unit tests are not implemented yet in LocalSearchTests");
+    BSLocalSearch* search = [BSLocalSearch new];
+    NSDictionary * dict = [search objectWithJSONString:@"{ \"test\": \"This is a test\" }"];
+    
+    STAssertNotNil(dict, @"The dictionary representation should not be nil");
+    STAssertNotNil([dict valueForKey:@"test"], @"The dictionary should have a key-value pair for key 'test'");
+    
+}
+
+- (void)testUnknownException
+{
+    BSLocalSearch *search = [BSLocalSearch new];
+    STAssertThrowsSpecificNamed([search executeTextSearch:@""], NSException, BSLocalSearchUnknownService, @"Calling search wihtout setting a service should through an exception");
+}
+
+
+- (void)testAPIKeyException
+{
+    BSLocalSearch *search = [BSLocalSearch new];
+    search.service = GOOGLE_PlACES;
+    STAssertThrowsSpecificNamed([search executeTextSearch:@""], NSException, BSLocalSearchMissingAPIKey, @"Calling search wihtout an API Key should through an exception");
+}
+
+- (void)testTextSearch
+{
+    BSLocalSearch* search = [BSLocalSearch new];
+    search.service = GOOGLE_PlACES;
+    search.apiKey = google_api_key;
+    
+    
+    id results = [search executeTextSearch:@"starbucks near boca raton"];
+    STAssertNotNil(results, @"Search result should never be nil");
+    STAssertTrue([[results valueForKey:@"status"] isEqualToString:@"OK"], @"Search Status should be OK");
 }
 
 @end
