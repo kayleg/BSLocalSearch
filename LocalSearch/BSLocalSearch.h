@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void(^BSLocalSearchCallback)(id response);
+
 @class JSONDecoder;
 @class BSLocalSearch;
 
@@ -35,5 +37,6 @@ enum BSLocalSearchService {
 @property (nonatomic, readwrite, getter = isSensorEnabled) bool sensorEnabled;
 
 - (void)submitTextSearch:(NSString*)query;
+- (void)submitTextSearch:(NSString*)query completionHandler:(BSLocalSearchCallback)handler;
 
 @end

@@ -62,13 +62,20 @@ static NSString* kGooglePlacesFormat = @"https://maps.googleapis.com/maps/api/pl
     return [self objectWithData:data];
 }
 
-- (void)submitTextSearch:(NSString *)query
+- (void)submitTextSearch:(NSString*)query completionHandler:(BSLocalSearchCallback)handler
 {
     dispatch_async(dispatch_get_current_queue(), ^{
         id result = [self executeTextSearch:query];
-        if(delegate)
-            [delegate searchReturnedWithResponse:result];
+        handler(result);
     });
+}
+
+- (void)submitTextSearch:(NSString *)query
+{
+    [self submitTextSearch:query completionHandler:^(id response){
+        if(delegate)
+            [delegate searchReturnedWithResponse:response];
+    }];
 }
 
 @end

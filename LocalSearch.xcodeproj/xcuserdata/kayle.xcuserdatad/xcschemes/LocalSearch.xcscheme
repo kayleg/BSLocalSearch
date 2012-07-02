@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AFEC4B10159CBEA400B3D27E"
-               BuildableName = "libLocalSearch.a"
-               BlueprintName = "LocalSearch"
+               BuildableName = "libBSLocalSearch.a"
+               BlueprintName = "BSLocalSearch"
                ReferencedContainer = "container:LocalSearch.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -48,6 +48,7 @@
       buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
+      enableOpenGLFrameCaptureMode = "0"
       allowLocationSimulation = "YES">
       <AdditionalOptions>
       </AdditionalOptions>
