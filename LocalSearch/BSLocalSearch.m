@@ -9,8 +9,15 @@
 #import "BSLocalSearch.h"
 #import "Exceptions.h"
 #import "JSONKit.h"
+#import <CoreLocation/CoreLocation.h>
 
 static NSString* kGooglePlacesFormat = @"https://maps.googleapis.com/maps/api/place/textsearch/json?%@";
+
+@implementation BSLocalSearchResult
+
+@synthesize formattedAddress, coordinate;
+
+@end
 
 @interface BSLocalSearch ()
 
@@ -59,7 +66,21 @@ static NSString* kGooglePlacesFormat = @"https://maps.googleapis.com/maps/api/pl
     }
     
     NSData *data = [NSData dataWithContentsOfURL:url];
-    return [self objectWithData:data];
+    NSDictionary* response = [self objectWithData:data];
+    
+    NSMutableDictionary *results = [NSMutableDictionary new];
+    [results setValue:[response valueForKey:@"status"] forKey:@"status"];
+    NSMutableArray *resultArray = [NSMutableArray new];
+    [results setValue:resultArray forKey:@"results"];
+    for(NSDictionary *attributes in [response valueForKey:@"results"])
+    {
+        BSLocalSearchResult *result = [BSLocalSearchResult new];
+        result.formattedAddress = [attributes valueForKey:@"formatted_address"];
+        result.coordinate = CLLocationCoordinate2DMake([[attributes valueForKeyPath:@"geometry.location.lat"] floatValue], [[attributes valueForKeyPath:@"geometry.location.lng"] floatValue]);
+        [resultArray addObject:result];
+        
+    }
+    return results;
 }
 
 - (void)submitTextSearch:(NSString*)query completionHandler:(BSLocalSearchCallback)handler

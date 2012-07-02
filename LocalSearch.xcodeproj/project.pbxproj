@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AF5258E515A1D3AC00C26CFE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF5258E415A1D3AC00C26CFE /* CoreLocation.framework */; };
+		AF5258EA15A1D76F00C26CFE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF5258E415A1D3AC00C26CFE /* CoreLocation.framework */; };
 		AFEC4B15159CBEA400B3D27E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFEC4B14159CBEA400B3D27E /* Foundation.framework */; };
 		AFEC4B1A159CBEA400B3D27E /* BSLocalSearch.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = AFEC4B19159CBEA400B3D27E /* BSLocalSearch.h */; };
 		AFEC4B1C159CBEA400B3D27E /* BSLocalSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = AFEC4B1B159CBEA400B3D27E /* BSLocalSearch.m */; };
@@ -44,6 +46,7 @@
 
 /* Begin PBXFileReference section */
 		AF5258B715A0F97600C26CFE /* Exceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Exceptions.h; sourceTree = "<group>"; };
+		AF5258E415A1D3AC00C26CFE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		AFEC4B11159CBEA400B3D27E /* libBSLocalSearch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBSLocalSearch.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFEC4B14159CBEA400B3D27E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AFEC4B18159CBEA400B3D27E /* LocalSearch-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LocalSearch-Prefix.pch"; sourceTree = "<group>"; };
@@ -67,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF5258E515A1D3AC00C26CFE /* CoreLocation.framework in Frameworks */,
 				AFEC4B15159CBEA400B3D27E /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -75,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF5258EA15A1D76F00C26CFE /* CoreLocation.framework in Frameworks */,
 				AFEC4B24159CBEA500B3D27E /* SenTestingKit.framework in Frameworks */,
 				AFEC4B26159CBEA500B3D27E /* UIKit.framework in Frameworks */,
 				AFEC4B27159CBEA500B3D27E /* Foundation.framework in Frameworks */,
@@ -108,6 +113,7 @@
 		AFEC4B13159CBEA400B3D27E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AF5258E415A1D3AC00C26CFE /* CoreLocation.framework */,
 				AFEC4B14159CBEA400B3D27E /* Foundation.framework */,
 				AFEC4B23159CBEA500B3D27E /* SenTestingKit.framework */,
 				AFEC4B25159CBEA500B3D27E /* UIKit.framework */,

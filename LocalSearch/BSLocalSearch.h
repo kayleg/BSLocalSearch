@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
 typedef void(^BSLocalSearchCallback)(id response);
 
@@ -17,6 +18,14 @@ enum BSLocalSearchService {
     GOOGLE_PlACES = 1,
     YELP = 2
     };
+
+@interface BSLocalSearchResult : NSObject
+
+@property (nonatomic, copy) NSString *formattedAddress;
+@property (nonatomic, assign) CLLocationCoordinate2D coordinate;
+
+
+@end
 
 @protocol LocalSearchDelegate <NSObject>
 
