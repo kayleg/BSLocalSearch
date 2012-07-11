@@ -16,7 +16,8 @@ typedef void(^BSLocalSearchCallback)(id response);
 
 enum BSLocalSearchService {
     GOOGLE_PlACES = 1,
-    YELP = 2
+    YELP = 2,
+    OPEN_STREET_MAP = 3
     };
 
 @interface BSLocalSearchResult : NSObject
@@ -43,6 +44,10 @@ enum BSLocalSearchService {
 @property (nonatomic, retain) id<LocalSearchDelegate> delegate;
 @property (nonatomic, readwrite) enum BSLocalSearchService service;
 @property (nonatomic, copy) NSString *apiKey;
+@property (nonatomic, copy) NSString *consumerKey;
+@property (nonatomic, copy) NSString *consumerSecret;
+@property (nonatomic, copy) NSString *token;
+@property (nonatomic, copy) NSString *tokenSecret;
 @property (nonatomic, readwrite, getter = isSensorEnabled) bool sensorEnabled;
 
 - (void)submitTextSearch:(NSString*)query;

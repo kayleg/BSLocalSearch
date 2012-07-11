@@ -57,16 +57,42 @@ static NSString* google_api_key = @"AIzaSyBvXdcfOZg_J3BGJLhH1vs-5UZ2_R0S-e8";
     STAssertThrowsSpecificNamed([search executeTextSearch:@""], NSException, BSLocalSearchMissingAPIKey, @"Calling search wihtout an API Key should through an exception");
 }
 
-- (void)testTextSearch
+//- (void)testTextSearch
+//{
+//    BSLocalSearch* search = [BSLocalSearch new];
+//    search.service = GOOGLE_PlACES;
+//    search.apiKey = google_api_key;
+//    
+//    
+//    NSDictionary *results = [search executeTextSearch:@"starbucks near boca raton"];
+//    STAssertNotNil(results, @"Search result should never be nil");
+//    STAssertTrue([[results valueForKey:@"status"] isEqualToString:@"OK"], @"Search Status should be OK");
+//    STAssertTrue([[results valueForKey:@"results"] count] > 0, @"There should be at least one result");
+//    STAssertTrue([[[results valueForKey:@"results"] objectAtIndex:0] class] == [BSLocalSearchResult class], @"Results should be converted to instances of BSLocalSearchResult");
+//}
+
+- (void)testOpenStreetMap
 {
     BSLocalSearch* search = [BSLocalSearch new];
-    search.service = GOOGLE_PlACES;
-    search.apiKey = google_api_key;
+    search.service = OPEN_STREET_MAP;
     
-    
-    NSDictionary *results = [search executeTextSearch:@"starbucks near boca raton"];
+    NSDictionary *results = [search executeTextSearch:@"boca raton"];
     STAssertNotNil(results, @"Search result should never be nil");
-    STAssertTrue([[results valueForKey:@"status"] isEqualToString:@"OK"], @"Search Status should be OK");
+    STAssertTrue([[results valueForKey:@"results"] count] > 0, @"There should be at least one result");
+    STAssertTrue([[[results valueForKey:@"results"] objectAtIndex:0] class] == [BSLocalSearchResult class], @"Results should be converted to instances of BSLocalSearchResult");
+}
+
+- (void)testYelp
+{
+    BSLocalSearch* search = [BSLocalSearch new];
+    search.service = YELP;
+    search.consumerKey = @"CONSUMER_KEY";
+    search.consumerSecret = @"CONSUMER_SECRET";
+    search.token = @"TOKEN";
+    search.tokenSecret = @"TOKEN_SECRET";
+    
+    NSDictionary *results = [search executeTextSearch:@"term=starbucks&location=boca raton"];
+    STAssertNotNil(results, @"Search result should never be nil");
     STAssertTrue([[results valueForKey:@"results"] count] > 0, @"There should be at least one result");
     STAssertTrue([[[results valueForKey:@"results"] objectAtIndex:0] class] == [BSLocalSearchResult class], @"Results should be converted to instances of BSLocalSearchResult");
 }

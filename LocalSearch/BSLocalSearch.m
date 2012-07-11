@@ -9,9 +9,13 @@
 #import "BSLocalSearch.h"
 #import "Exceptions.h"
 #import "JSONKit.h"
+#import <UIKit/UIKit.h>
+#import "OAuthConsumer.h"
 #import <CoreLocation/CoreLocation.h>
 
 static NSString* kGooglePlacesFormat = @"https://maps.googleapis.com/maps/api/place/textsearch/json?%@";
+static NSString* kOpenStreetMapFormat = @"http://nominatim.openstreetmap.org/search?format=json&q=%@";
+static NSString* kYelpFormat = @"http://api.yelp.com/v2/search?%@";
 
 @implementation BSLocalSearchResult
 
@@ -28,7 +32,7 @@ static NSString* kGooglePlacesFormat = @"https://maps.googleapis.com/maps/api/pl
 
 @implementation BSLocalSearch
 
-@synthesize delegate = delegate, service, apiKey, sensorEnabled;
+@synthesize delegate = delegate, service, apiKey, sensorEnabled, consumerKey, consumerSecret, token, tokenSecret;
 
 - (id)init
 {
@@ -53,6 +57,7 @@ static NSString* kGooglePlacesFormat = @"https://maps.googleapis.com/maps/api/pl
 - (id)executeTextSearch:(NSString *)query
 {
     NSURL *url;
+    NSData *data;
     static NSString* TRUE_STRING = @"true";
     static NSString* FALSE_STRING = @"false";
     if(service == GOOGLE_PlACES)
@@ -61,25 +66,83 @@ static NSString* kGooglePlacesFormat = @"https://maps.googleapis.com/maps/api/pl
             [NSException raise:BSLocalSearchMissingAPIKey format:@"API Key was not supplied"];
         NSString *params = [NSString stringWithFormat:@"query=%@&sensor=%@&key=%@",query, (sensorEnabled ? TRUE_STRING : FALSE_STRING), apiKey];
         url = [NSURL URLWithString:[NSString stringWithFormat:kGooglePlacesFormat, [params stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
-    }else{
+    } else if(service == OPEN_STREET_MAP)
+    {
+        url = [NSURL URLWithString:[NSString stringWithFormat:kOpenStreetMapFormat, [query stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+    }
+    else if (service == YELP)
+    {
+        if (!token || !tokenSecret || !consumerKey || !consumerSecret) {
+            [NSException raise:BSLocalSearchMissingAPIKey format:@"Missing Yelp Credentials"];
+        }
+        url = [NSURL URLWithString:[NSString stringWithFormat:kYelpFormat, [query stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+        OAConsumer *consumer = [[OAConsumer alloc] initWithKey:consumerKey secret:consumerSecret];
+        OAToken *oatoken = [[OAToken alloc] initWithKey:token secret:tokenSecret];
+        
+        id<OASignatureProviding, NSObject> provider = [[OAHMAC_SHA1SignatureProvider alloc] init];
+        
+        OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:url
+                                                                       consumer:consumer
+                                                                          token:oatoken
+                                                                          realm:nil
+                                                              signatureProvider:provider];
+        [request prepare];
+        NSURLResponse *resp;
+        data = [NSURLConnection  sendSynchronousRequest:request returningResponse:&resp error:nil];
+    }
+    else{
         [NSException raise:BSLocalSearchUnknownService format:@"Unknown or no search service specified"];
     }
     
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    NSDictionary* response = [self objectWithData:data];
+    if (service != YELP) {
+        data = [NSData dataWithContentsOfURL:url];
+    }
+
+    id response = [self objectWithData:data];
     
     NSMutableDictionary *results = [NSMutableDictionary new];
-    [results setValue:[response valueForKey:@"status"] forKey:@"status"];
-    NSMutableArray *resultArray = [NSMutableArray new];
-    [results setValue:resultArray forKey:@"results"];
-    for(NSDictionary *attributes in [response valueForKey:@"results"])
+    if (service == GOOGLE_PlACES) {
+        [results setValue:[response valueForKey:@"status"] forKey:@"status"];
+        NSMutableArray *resultArray = [NSMutableArray new];
+        [results setValue:resultArray forKey:@"results"];
+        for(NSDictionary *attributes in [response valueForKey:@"results"])
+        {
+            BSLocalSearchResult *result = [BSLocalSearchResult new];
+            result.formattedAddress = [attributes valueForKey:@"formatted_address"];
+            result.coordinate = CLLocationCoordinate2DMake([[attributes valueForKeyPath:@"geometry.location.lat"] floatValue], [[attributes valueForKeyPath:@"geometry.location.lng"] floatValue]);
+            [resultArray addObject:result];
+            
+        }
+    }else if (service == OPEN_STREET_MAP)
     {
-        BSLocalSearchResult *result = [BSLocalSearchResult new];
-        result.formattedAddress = [attributes valueForKey:@"formatted_address"];
-        result.coordinate = CLLocationCoordinate2DMake([[attributes valueForKeyPath:@"geometry.location.lat"] floatValue], [[attributes valueForKeyPath:@"geometry.location.lng"] floatValue]);
-        [resultArray addObject:result];
+        [results setValue:response ? @"OK" : @"ERROR" forKey:@"status"];
+        NSMutableArray *resultArray = [NSMutableArray new];
+        [results setValue:resultArray forKey:@"results"];
+        for(NSDictionary *attributes in response)
+        {
+            BSLocalSearchResult *result = [BSLocalSearchResult new];
+            result.formattedAddress = [attributes valueForKey:@"display_name"];
+            result.coordinate = CLLocationCoordinate2DMake([[attributes valueForKeyPath:@"lat"] floatValue], [[attributes valueForKeyPath:@"lon"] floatValue]);
+            [resultArray addObject:result];
+        }
+    } else if(service == YELP)
+    {
+        if ([response valueForKey:@"error"]) {
+            [results setValue:[response valueForKey:@"error"] forKey:@"status"];
+        }else
+            [results setValue:@"OK" forKey:@"status"];
         
+        NSMutableArray *resultArray = [NSMutableArray new];
+        [results setValue:resultArray forKey:@"results"];
+        for(NSDictionary *attributes in [response valueForKey:@"businesses"])
+        {
+            BSLocalSearchResult *result = [BSLocalSearchResult new];
+            result.formattedAddress = [[attributes valueForKeyPath:@"location.display_address"] componentsJoinedByString:@", "];
+            result.coordinate = CLLocationCoordinate2DMake([[attributes valueForKeyPath:@"location.coordinate.latitude"] floatValue], [[attributes valueForKeyPath:@"location.coordinate.longitude"] floatValue]);
+            [resultArray addObject:result];
+        }
     }
+    
     return results;
 }
 
