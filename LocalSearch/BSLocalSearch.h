@@ -49,6 +49,7 @@ enum BSLocalSearchService {
 @property (nonatomic, copy) NSString *token;
 @property (nonatomic, copy) NSString *tokenSecret;
 @property (nonatomic, readwrite, getter = isSensorEnabled) bool sensorEnabled;
+@property (nonatomic, retain) CLLocation *location;
 
 - (void)submitTextSearch:(NSString*)query;
 - (void)submitTextSearch:(NSString*)query completionHandler:(BSLocalSearchCallback)handler;

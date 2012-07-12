@@ -16,6 +16,9 @@
 static NSString* kGooglePlacesFormat = @"https://maps.googleapis.com/maps/api/place/textsearch/json?%@";
 static NSString* kOpenStreetMapFormat = @"http://nominatim.openstreetmap.org/search?format=json&q=%@";
 static NSString* kYelpFormat = @"http://api.yelp.com/v2/search?%@";
+static NSString* kNear = @" near ";
+static NSString* kTrimCharacters = @" ,";
+static NSCharacterSet* kTrimSet;
 
 @implementation BSLocalSearchResult
 
@@ -32,13 +35,14 @@ static NSString* kYelpFormat = @"http://api.yelp.com/v2/search?%@";
 
 @implementation BSLocalSearch
 
-@synthesize delegate = delegate, service, apiKey, sensorEnabled, consumerKey, consumerSecret, token, tokenSecret;
+@synthesize delegate = delegate, service, apiKey, sensorEnabled, consumerKey, consumerSecret, token, tokenSecret, location;
 
 - (id)init
 {
     self = [super init];
     if (self) {
         _decoder = [JSONDecoder decoder];
+        kTrimSet = [NSCharacterSet characterSetWithCharactersInString:kTrimCharacters];
     }
     
     return self;
@@ -75,7 +79,16 @@ static NSString* kYelpFormat = @"http://api.yelp.com/v2/search?%@";
         if (!token || !tokenSecret || !consumerKey || !consumerSecret) {
             [NSException raise:BSLocalSearchMissingAPIKey format:@"Missing Yelp Credentials"];
         }
-        url = [NSURL URLWithString:[NSString stringWithFormat:kYelpFormat, [query stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+        NSRange range = [[query lowercaseString] rangeOfString:kNear];
+        NSString *params;
+        if (range.location != NSNotFound ) {
+            NSString *term = [[query substringToIndex:range.location] stringByTrimmingCharactersInSet:kTrimSet];
+            NSString *loc = [[query substringFromIndex:range.location + range.length] stringByTrimmingCharactersInSet:kTrimSet];
+            params = [NSString stringWithFormat:@"term=%@&location=%@",term, loc];
+        }else
+            params = [NSString stringWithFormat:@"term=%@&cll=%f,%f",query, location.coordinate.latitude, location.coordinate.longitude];
+        
+        url = [NSURL URLWithString:[NSString stringWithFormat:kYelpFormat, [params stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
         OAConsumer *consumer = [[OAConsumer alloc] initWithKey:consumerKey secret:consumerSecret];
         OAToken *oatoken = [[OAToken alloc] initWithKey:token secret:tokenSecret];
         

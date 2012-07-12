@@ -91,7 +91,7 @@ static NSString* google_api_key = @"AIzaSyBvXdcfOZg_J3BGJLhH1vs-5UZ2_R0S-e8";
     search.token = @"TOKEN";
     search.tokenSecret = @"TOKEN_SECRET";
     
-    NSDictionary *results = [search executeTextSearch:@"term=starbucks&location=boca raton"];
+    NSDictionary *results = [search executeTextSearch:@"starbucks near boca raton"];
     STAssertNotNil(results, @"Search result should never be nil");
     STAssertTrue([[results valueForKey:@"results"] count] > 0, @"There should be at least one result");
     STAssertTrue([[[results valueForKey:@"results"] objectAtIndex:0] class] == [BSLocalSearchResult class], @"Results should be converted to instances of BSLocalSearchResult");
