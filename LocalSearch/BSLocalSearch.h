@@ -51,6 +51,8 @@ enum BSLocalSearchService {
 @property (nonatomic, readwrite, getter = isSensorEnabled) bool sensorEnabled;
 @property (nonatomic, retain) CLLocation *location;
 
++ (BSLocalSearch*)sharedInstance;
+
 - (void)submitTextSearch:(NSString*)query;
 - (void)submitTextSearch:(NSString*)query completionHandler:(BSLocalSearchCallback)handler;
 

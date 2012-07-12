@@ -20,6 +20,8 @@ static NSString* kNear = @" near ";
 static NSString* kTrimCharacters = @" ,";
 static NSCharacterSet* kTrimSet;
 
+static BSLocalSearch *_instance = nil;
+
 @implementation BSLocalSearchResult
 
 @synthesize formattedAddress, coordinate;
@@ -36,6 +38,16 @@ static NSCharacterSet* kTrimSet;
 @implementation BSLocalSearch
 
 @synthesize delegate = delegate, service, apiKey, sensorEnabled, consumerKey, consumerSecret, token, tokenSecret, location;
+
++ (BSLocalSearch*)sharedInstance
+{
+    static dispatch_once_t once;
+    dispatch_once(&once, ^ {
+        if(_instance == nil)
+            _instance = [self new];
+    });
+    return _instance;
+}
 
 - (id)init
 {
