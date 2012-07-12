@@ -98,7 +98,7 @@ static BSLocalSearch *_instance = nil;
             NSString *loc = [[query substringFromIndex:range.location + range.length] stringByTrimmingCharactersInSet:kTrimSet];
             params = [NSString stringWithFormat:@"term=%@&location=%@",term, loc];
         }else
-            params = [NSString stringWithFormat:@"term=%@&cll=%f,%f",query, location.coordinate.latitude, location.coordinate.longitude];
+            params = [NSString stringWithFormat:@"term=%@&ll=%f,%f",query, location.coordinate.latitude, location.coordinate.longitude];
         
         url = [NSURL URLWithString:[NSString stringWithFormat:kYelpFormat, [params stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
         OAConsumer *consumer = [[OAConsumer alloc] initWithKey:consumerKey secret:consumerSecret];
