@@ -123,10 +123,10 @@ static BSLocalSearch *_instance = nil;
         }
         NSString *str = [[query lowercaseString] stringByReplacingOccurrencesOfString:kNear withString:@""];
         if (useLocation && location) {
-            str = [str stringByAppendingFormat:@"geo={\"$point\":[%f,%f]}", location.coordinate.latitude, location.coordinate.longitude];
+            str = [str stringByAppendingFormat:@"&geo={\"$point\":[%f,%f]}", location.coordinate.latitude, location.coordinate.longitude];
         }
         url = [NSURL URLWithString:[NSString stringWithFormat:kFactualFormat, str]];
-        OAConsumer *consumer = [[OAConsumer alloc] initWithKey:consumerKey secret:consumerKey];
+        OAConsumer *consumer = [[OAConsumer alloc] initWithKey:consumerKey secret:consumerSecret];
         id<OASignatureProviding, NSObject> provider = [[OAHMAC_SHA1SignatureProvider alloc] init];
         
         OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:url
@@ -193,7 +193,7 @@ static BSLocalSearch *_instance = nil;
         [results setValue:[[response valueForKey:@"status"] isEqualToString:@"ok"] ? @"OK" : @"ERROR" forKey:@"status"];
         NSMutableArray *resultArray = [NSMutableArray new];
         [results setValue:resultArray forKey:@"results"];
-        for(NSDictionary *attributes in [response valueForKey:@"data"])
+        for(NSDictionary *attributes in [response valueForKeyPath:@"response.data"])
         {
             BSLocalSearchResult *result = [BSLocalSearchResult new];
             NSMutableArray *addressComponents = [NSMutableArray arrayWithObjects:[attributes valueForKey:@"address"], [NSString stringWithFormat:@"%@ %@", [attributes valueForKey:@"locality"], [attributes valueForKey:@"postcode"]], [attributes valueForKey:@"region"], [attributes valueForKey:@"country"], nil];
