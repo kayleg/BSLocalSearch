@@ -97,4 +97,18 @@ static NSString* google_api_key = @"AIzaSyBvXdcfOZg_J3BGJLhH1vs-5UZ2_R0S-e8";
     STAssertTrue([[[results valueForKey:@"results"] objectAtIndex:0] class] == [BSLocalSearchResult class], @"Results should be converted to instances of BSLocalSearchResult");
 }
 
+- (void)testFactual
+{
+    BSLocalSearch *search = [BSLocalSearch new];
+    search.service = FACTUAL;
+    search.consumerKey = @"KEY";
+    search.consumerSecret = @"SECRET";
+    
+    NSDictionary *results = [search executeTextSearch:@"starbucks near boca raton"];
+    STAssertNotNil(results, @"Search result should never be nil");
+    STAssertTrue([[results valueForKey:@"results"] count] > 0, @"There should be at least one result");
+    STAssertTrue([[[results valueForKey:@"results"] objectAtIndex:0] class] == [BSLocalSearchResult class], @"Results should be converted to instances of BSLocalSearchResult");
+    
+}
+
 @end

@@ -17,7 +17,8 @@ typedef void(^BSLocalSearchCallback)(id response);
 enum BSLocalSearchService {
     GOOGLE_PlACES = 1,
     YELP = 2,
-    OPEN_STREET_MAP = 3
+    OPEN_STREET_MAP = 3,
+    FACTUAL = 4
     };
 
 @interface BSLocalSearchResult : NSObject

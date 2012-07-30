@@ -16,6 +16,7 @@
 static NSString* kGooglePlacesFormat = @"https://maps.googleapis.com/maps/api/place/textsearch/json?%@";
 static NSString* kOpenStreetMapFormat = @"http://nominatim.openstreetmap.org/search?format=json&q=%@";
 static NSString* kYelpFormat = @"http://api.yelp.com/v2/search?%@";
+static NSString* kFactualFormat = @"http://api.v3.factual.com/t/places.json?q=%@";
 static NSString* kNear = @" near ";
 static NSString* kTrimCharacters = @" ,";
 static NSCharacterSet* kTrimSet;
@@ -114,12 +115,30 @@ static BSLocalSearch *_instance = nil;
         [request prepare];
         NSURLResponse *resp;
         data = [NSURLConnection  sendSynchronousRequest:request returningResponse:&resp error:nil];
+    } else if (service == FACTUAL)
+    {
+        if (!consumerKey || !consumerSecret) {
+            [NSException raise:BSLocalSearchMissingAPIKey format:@"Missing Factual Credentials"];
+        }
+        NSString *str = [[query lowercaseString] stringByReplacingOccurrencesOfString:kNear withString:@""];
+        url = [NSURL URLWithString:[NSString stringWithFormat:kFactualFormat, str]];
+        OAConsumer *consumer = [[OAConsumer alloc] initWithKey:consumerKey secret:consumerKey];
+        id<OASignatureProviding, NSObject> provider = [[OAHMAC_SHA1SignatureProvider alloc] init];
+        
+        OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:url
+                                                                       consumer:consumer
+                                                                          token:nil
+                                                                          realm:nil
+                                                              signatureProvider:provider];
+        [request prepare];
+        NSURLResponse *resp;
+        data = [NSURLConnection  sendSynchronousRequest:request returningResponse:&resp error:nil];
     }
     else{
         [NSException raise:BSLocalSearchUnknownService format:@"Unknown or no search service specified"];
     }
     
-    if (service != YELP) {
+    if (service != YELP && service != FACTUAL) {
         data = [NSData dataWithContentsOfURL:url];
     }
 
@@ -164,6 +183,18 @@ static BSLocalSearch *_instance = nil;
             BSLocalSearchResult *result = [BSLocalSearchResult new];
             result.formattedAddress = [[attributes valueForKeyPath:@"location.display_address"] componentsJoinedByString:@", "];
             result.coordinate = CLLocationCoordinate2DMake([[attributes valueForKeyPath:@"location.coordinate.latitude"] floatValue], [[attributes valueForKeyPath:@"location.coordinate.longitude"] floatValue]);
+            [resultArray addObject:result];
+        }
+    } else if (service == FACTUAL) {
+        [results setValue:[[response valueForKey:@"status"] isEqualToString:@"ok"] ? @"OK" : @"ERROR" forKey:@"status"];
+        NSMutableArray *resultArray = [NSMutableArray new];
+        [results setValue:resultArray forKey:@"results"];
+        for(NSDictionary *attributes in [response valueForKey:@"data"])
+        {
+            BSLocalSearchResult *result = [BSLocalSearchResult new];
+            NSMutableArray *addressComponents = [NSMutableArray arrayWithObjects:[attributes valueForKey:@"address"], [NSString stringWithFormat:@"%@ %@", [attributes valueForKey:@"locality"], [attributes valueForKey:@"postcode"]], [attributes valueForKey:@"region"], [attributes valueForKey:@"country"], nil];
+            result.formattedAddress = [addressComponents componentsJoinedByString:@", "];
+            result.coordinate = CLLocationCoordinate2DMake([[attributes valueForKeyPath:@"latitude"] floatValue], [[attributes valueForKeyPath:@"longitude"] floatValue]);
             [resultArray addObject:result];
         }
     }
