@@ -125,7 +125,7 @@ static BSLocalSearch *_instance = nil;
         if (useLocation && location) {
             str = [str stringByAppendingFormat:@"&geo={\"$point\":[%f,%f]}", location.coordinate.latitude, location.coordinate.longitude];
         }
-        url = [NSURL URLWithString:[NSString stringWithFormat:kFactualFormat, str]];
+        url = [NSURL URLWithString:[NSString stringWithFormat:kFactualFormat, [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
         OAConsumer *consumer = [[OAConsumer alloc] initWithKey:consumerKey secret:consumerSecret];
         id<OASignatureProviding, NSObject> provider = [[OAHMAC_SHA1SignatureProvider alloc] init];
         
