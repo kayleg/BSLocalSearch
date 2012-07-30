@@ -38,7 +38,7 @@ static BSLocalSearch *_instance = nil;
 
 @implementation BSLocalSearch
 
-@synthesize delegate = delegate, service, apiKey, sensorEnabled, consumerKey, consumerSecret, token, tokenSecret, location;
+@synthesize delegate = delegate, service, apiKey, sensorEnabled, consumerKey, consumerSecret, token, tokenSecret, location, useLocation;
 
 + (BSLocalSearch*)sharedInstance
 {
@@ -56,6 +56,7 @@ static BSLocalSearch *_instance = nil;
     if (self) {
         _decoder = [JSONDecoder decoder];
         kTrimSet = [NSCharacterSet characterSetWithCharactersInString:kTrimCharacters];
+        useLocation = YES;
     }
     
     return self;
@@ -121,6 +122,9 @@ static BSLocalSearch *_instance = nil;
             [NSException raise:BSLocalSearchMissingAPIKey format:@"Missing Factual Credentials"];
         }
         NSString *str = [[query lowercaseString] stringByReplacingOccurrencesOfString:kNear withString:@""];
+        if (useLocation && location) {
+            str = [str stringByAppendingFormat:@"geo={\"$point\":[%f,%f]}", location.coordinate.latitude, location.coordinate.longitude];
+        }
         url = [NSURL URLWithString:[NSString stringWithFormat:kFactualFormat, str]];
         OAConsumer *consumer = [[OAConsumer alloc] initWithKey:consumerKey secret:consumerKey];
         id<OASignatureProviding, NSObject> provider = [[OAHMAC_SHA1SignatureProvider alloc] init];
