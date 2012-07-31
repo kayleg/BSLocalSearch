@@ -121,9 +121,12 @@ static BSLocalSearch *_instance = nil;
         if (!consumerKey || !consumerSecret) {
             [NSException raise:BSLocalSearchMissingAPIKey format:@"Missing Factual Credentials"];
         }
-        NSString *str = [[query lowercaseString] stringByReplacingOccurrencesOfString:kNear withString:@""];
+        query = [query lowercaseString];
+        NSString *str;
+        if ([query rangeOfString:kNear].location != NSNotFound)
+            str = [query stringByReplacingOccurrencesOfString:kNear withString:@" "];
         if (useLocation && location) {
-            str = [str stringByAppendingFormat:@"&geo={\"$point\":[%f,%f]}", location.coordinate.latitude, location.coordinate.longitude];
+            str = [query stringByAppendingFormat:@"&geo={\"$point\":[%f,%f]}", location.coordinate.latitude, location.coordinate.longitude];
         }
         url = [NSURL URLWithString:[NSString stringWithFormat:kFactualFormat, [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
         OAConsumer *consumer = [[OAConsumer alloc] initWithKey:consumerKey secret:consumerSecret];
