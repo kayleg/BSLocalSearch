@@ -51,6 +51,7 @@ enum BSLocalSearchService {
 @property (nonatomic, copy) NSString *tokenSecret;
 @property (nonatomic, readwrite, getter = isSensorEnabled) bool sensorEnabled;
 @property (nonatomic, retain) CLLocation *location;
+@property (nonatomic, assign) CLLocationDistance radius;
 @property (nonatomic, readwrite) bool useLocation;
 
 + (BSLocalSearch*)sharedInstance;
