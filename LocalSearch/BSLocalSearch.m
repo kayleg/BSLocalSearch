@@ -25,7 +25,23 @@ static BSLocalSearch *_instance = nil;
 
 @implementation BSLocalSearchResult
 
-@synthesize formattedAddress, coordinate;
+@synthesize formattedAddress, coordinate, name;
+
+- (NSString*)title
+{
+    return name;
+}
+
+- (NSString*)subtitle
+{
+    return formattedAddress;
+}
+
+- (void)dealloc
+{
+    formattedAddress = nil;
+    name = nil;
+}
 
 @end
 
@@ -148,10 +164,17 @@ static BSLocalSearch *_instance = nil;
     if (service != YELP && service != FACTUAL) {
         data = [NSData dataWithContentsOfURL:url];
     }
+    
+    NSMutableDictionary *results = [NSMutableDictionary new];
+    if (!data) {
+        [results setValue:@"ERROR" forKey:@"status"];
+        NSMutableArray *resultArray = [NSMutableArray new];
+        [results setValue:resultArray forKey:@"results"];
+        return results;
+    }
 
     id response = [self objectWithData:data];
     
-    NSMutableDictionary *results = [NSMutableDictionary new];
     if (service == GOOGLE_PlACES) {
         [results setValue:[response valueForKey:@"status"] forKey:@"status"];
         NSMutableArray *resultArray = [NSMutableArray new];
@@ -202,6 +225,7 @@ static BSLocalSearch *_instance = nil;
             NSMutableArray *addressComponents = [NSMutableArray arrayWithObjects:[attributes valueForKey:@"address"], [NSString stringWithFormat:@"%@ %@", [attributes valueForKey:@"locality"], [attributes valueForKey:@"postcode"]], [attributes valueForKey:@"region"], [attributes valueForKey:@"country"], nil];
             result.formattedAddress = [addressComponents componentsJoinedByString:@", "];
             result.coordinate = CLLocationCoordinate2DMake([[attributes valueForKeyPath:@"latitude"] floatValue], [[attributes valueForKeyPath:@"longitude"] floatValue]);
+            result.name = [attributes valueForKey:@"name"];
             [resultArray addObject:result];
         }
     }

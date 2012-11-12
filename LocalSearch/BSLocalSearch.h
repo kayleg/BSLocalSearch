@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import <MapKit/MapKit.h>
 
 typedef void(^BSLocalSearchCallback)(id response);
 
@@ -21,10 +22,11 @@ enum BSLocalSearchService {
     FACTUAL = 4
     };
 
-@interface BSLocalSearchResult : NSObject
+@interface BSLocalSearchResult : NSObject <MKAnnotation>
 
 @property (nonatomic, copy) NSString *formattedAddress;
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
+@property (nonatomic, copy) NSString *name;
 
 
 @end
