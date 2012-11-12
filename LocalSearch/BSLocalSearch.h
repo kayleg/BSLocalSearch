@@ -44,7 +44,7 @@ enum BSLocalSearchService {
     JSONDecoder *_decoder;
 }
 
-@property (nonatomic, retain) id<LocalSearchDelegate> delegate;
+@property (nonatomic, weak) id<LocalSearchDelegate> delegate;
 @property (nonatomic, readwrite) enum BSLocalSearchService service;
 @property (nonatomic, copy) NSString *apiKey;
 @property (nonatomic, copy) NSString *consumerKey;
