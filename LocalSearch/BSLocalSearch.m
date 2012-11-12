@@ -94,6 +94,8 @@ static BSLocalSearch *_instance = nil;
     NSData *data;
     static NSString* TRUE_STRING = @"true";
     static NSString* FALSE_STRING = @"false";
+    // & behave badly because of their use as joining params
+    query = [query stringByReplacingOccurrencesOfString:@"&" withString:@"and"];
     if(service == GOOGLE_PlACES)
     {
         if(!apiKey)
