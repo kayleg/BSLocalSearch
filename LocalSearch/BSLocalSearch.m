@@ -18,6 +18,7 @@ static NSString* kOpenStreetMapFormat = @"http://nominatim.openstreetmap.org/sea
 static NSString* kYelpFormat = @"http://api.yelp.com/v2/search?%@";
 static NSString* kFactualFormat = @"http://api.v3.factual.com/t/places.json?q=%@";
 static NSString* kNear = @" near ";
+static NSString* kIn = @" in ";
 static NSString* kTrimCharacters = @" ,";
 static NSCharacterSet* kTrimSet;
 
@@ -139,25 +140,44 @@ static BSLocalSearch *_instance = nil;
         if (!consumerKey || !consumerSecret) {
             [NSException raise:BSLocalSearchMissingAPIKey format:@"Missing Factual Credentials"];
         }
-        query = [query lowercaseString];
-        NSString *str;
-        if([query rangeOfString:kNear].location != NSNotFound)
-           str = [[query lowercaseString] stringByReplacingOccurrencesOfString:kNear withString:@" "];
-        else if (useLocation && location) {
-            str = [query stringByAppendingFormat:@"&geo={\"$circle\":{\"$center\":[%f,%f],\"$meters\":%f}}", location.coordinate.latitude, location.coordinate.longitude, MAX(self.radius, 500000)];
-        }
-        url = [NSURL URLWithString:[NSString stringWithFormat:kFactualFormat, [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
-        OAConsumer *consumer = [[OAConsumer alloc] initWithKey:consumerKey secret:consumerSecret];
-        id<OASignatureProviding, NSObject> provider = [[OAHMAC_SHA1SignatureProvider alloc] init];
         
-        OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:url
-                                                                       consumer:consumer
-                                                                          token:nil
-                                                                          realm:nil
-                                                              signatureProvider:provider];
-        [request prepare];
-        NSURLResponse *resp;
-        data = [NSURLConnection  sendSynchronousRequest:request returningResponse:&resp error:nil];
+        NSData* (^factualSearchBlock)(bool useLoc, NSString * query);
+        factualSearchBlock = ^(bool useLoc, NSString * query) {
+            NSString *str;
+            if(!useLoc)
+                str = query;
+            else if (useLoc) {
+                str = [query stringByAppendingFormat:@"&geo={\"$circle\":{\"$center\":[%f,%f],\"$meters\":%f}}", location.coordinate.latitude, location.coordinate.longitude, MAX(self.radius, 500000)];
+            }
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kFactualFormat, [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+            OAConsumer *consumer = [[OAConsumer alloc] initWithKey:consumerKey secret:consumerSecret];
+            id<OASignatureProviding, NSObject> provider = [[OAHMAC_SHA1SignatureProvider alloc] init];
+            
+            OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:url
+                                                                           consumer:consumer
+                                                                              token:nil
+                                                                              realm:nil
+                                                                  signatureProvider:provider];
+            [request prepare];
+            NSURLResponse *resp;
+            return [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:nil];
+        };
+        query = [query lowercaseString];
+        if([query rangeOfString:kNear].location != NSNotFound || [query rangeOfString:kIn].location != NSNotFound) {
+            query = [[query lowercaseString] stringByReplacingOccurrencesOfString:kNear withString:@" "];
+            query = [[query lowercaseString] stringByReplacingOccurrencesOfString:kIn withString:@" "];
+        }
+        if (useLocation && location) {
+            data = factualSearchBlock(true, query);
+            id response = [self objectWithData:data];
+            if (![[response valueForKeyPath:@"response.data"] count]) {
+                data = factualSearchBlock(false, query);
+            }
+        } else {
+            data = factualSearchBlock(false, query);
+        }
+        
+        
     }
     else{
         [NSException raise:BSLocalSearchUnknownService format:@"Unknown or no search service specified"];
